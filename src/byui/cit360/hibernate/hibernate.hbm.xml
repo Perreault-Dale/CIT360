@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="byui.cit360.collections.model.Employee" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="employee">
+      <id name="empNumber" column="EMP_NUMBER">
+          <generator class="assigned"/>
+      </id>
+      <property name="firstName" type="string" column="FIRST_NAME"/>
+      <property name="lastName" type="string" column="LAST_NAME"/>
+      <property name="hireDate" type="calendar_date" column="HIRE_DATE"/>
+  </class>
+</hibernate-mapping>
