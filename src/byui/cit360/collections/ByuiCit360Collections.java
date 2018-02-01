@@ -10,6 +10,8 @@ import byui.cit360.collections.model.Employee;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +41,13 @@ public class ByuiCit360Collections {
         
         // Use the set to create a map
         maptest(es);
+        
+        try {
+            // Now let's save to MySQL
+            byui.cit360.hibernate.Hibernate.saveRecords(es);
+        } catch (Exception ex) {
+            Logger.getLogger(ByuiCit360Collections.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void listtest(Employee[] ea) throws IOException {
