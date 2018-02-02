@@ -29,6 +29,12 @@ public class Employee implements Serializable, Comparable<Employee> {
         return (empComp != 0 ? empComp : firstName.compareTo(e.firstName));
     }
 
+    // Default constructor
+    public Employee() {
+        
+    }
+    
+    //Custom constructor
     public Employee(String firstName, String lastName, Integer empNumber, Date hireDate) {
         this.firstName = firstName;
         this.lastName = lastName;

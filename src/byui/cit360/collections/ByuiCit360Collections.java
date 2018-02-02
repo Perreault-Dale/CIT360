@@ -45,6 +45,8 @@ public class ByuiCit360Collections {
         try {
             // Now let's save to MySQL
             byui.cit360.hibernate.Hibernate.saveRecords(es);
+            // Now to query from MySQL and print to screen
+            byui.cit360.hibernate.Hibernate.getRecords();
         } catch (Exception ex) {
             Logger.getLogger(ByuiCit360Collections.class.getName()).log(Level.SEVERE, null, ex);
         }

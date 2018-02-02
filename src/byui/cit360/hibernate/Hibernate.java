@@ -26,6 +26,10 @@ public class Hibernate {
         factory = new Configuration().configure().buildSessionFactory();
     }
     
+    protected static void tearDown() throws Exception {
+        factory.close();
+    }
+    
     public static void saveRecords(Set<Employee> es) {
         try {
             setUp();
@@ -40,15 +44,30 @@ public class Hibernate {
         session.getTransaction().commit();
         session.close();
         System.out.println("Records stored successfully.");
+        try {
+            tearDown();
+        } catch (Exception ex) {
+            Logger.getLogger(Hibernate.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void getRecords() {
+        try {
+            setUp();
+        } catch (Exception ex) {
+            Logger.getLogger(Hibernate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Session session = factory.openSession();
         session.beginTransaction();
-        List<Employee> el = session.createQuery("from employee").list();
+        List<Employee> el = session.createQuery("FROM Employee E ORDER BY E.firstName").list();
         System.out.println("DB Query Results:");
         for (Employee e : el) {
             System.out.println(e.getEmpNumber() + ", " + e.getFirstName() + " " + e.getLastName());
+        }
+        try {
+            tearDown();
+        } catch (Exception ex) {
+            Logger.getLogger(Hibernate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
