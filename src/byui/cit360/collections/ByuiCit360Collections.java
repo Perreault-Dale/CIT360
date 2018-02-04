@@ -122,6 +122,12 @@ public class ByuiCit360Collections {
         String number = reader1.readLine();
         Employee e = em.get(Integer.valueOf(number));
         System.out.println(e.toString());
+        byui.cit360.json.json.buildJSON(e);
+        
+        // Add a new employee from JSON
+        Employee ne = byui.cit360.json.json.employeeFromJSON();
+        em.put(ne.getEmpNumber(),ne);
+        System.out.println("New Employee Added: " + ne.getFirstName() + " " + ne.getLastName());
         
         // use the HashMap to create a TreeMap
         treetest(em);
