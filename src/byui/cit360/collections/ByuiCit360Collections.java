@@ -198,7 +198,10 @@ public class ByuiCit360Collections {
         workers[4] = new Employee("Nancy","Rogers",123460,new Date(113,12,3));
         
         // use the array to create a list
-        listtest(workers);
+        // listtest(workers);
+        
+        // Let's test our URL and JSON
+        byui.cit360.url.url.getToken();
     }
     
 }
