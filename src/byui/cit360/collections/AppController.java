@@ -19,6 +19,7 @@ public class AppController {
     
     public static void fillMap() {
         commands.put("list", new ByuiCit360Collections());
+        commands.put("del", new byui.cit360.hibernate.DeleteRecords());
         commands.put("url", new byui.cit360.url.url());
         commands.put("exit", new exit());
     }

@@ -220,10 +220,12 @@ public class ByuiCit360Collections implements byui.cit360.Handler {
         String menu = "CIT360 Menu\r\n"
                     + "===========\r\n\n"
                     + "list - Test Collections, Hibernate\r\n"
+                    + "del  - Test Hibernate with SQL\r\n"
                     + "url  - Test HTTPConnection, JSON\r\n"
                     + "exit - leave the program\r\n\n"
                     + "Choose the test to run: ";
         
+        // Accept and verify user input
         while(!choice.equals("exit")) {
             BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
             System.out.print(menu);
