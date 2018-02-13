@@ -38,9 +38,14 @@ public class Hibernate {
         }
         Session session = factory.openSession();
         session.beginTransaction();
-        es.stream().forEach((e) -> {
-            session.save(e);
-        });
+        try {
+            es.stream().forEach((e) -> {
+                session.save(e);
+            });
+        }
+        catch (Exception ex) {
+            Logger.getLogger(Hibernate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         session.getTransaction().commit();
         session.close();
         System.out.println("Records stored successfully.");

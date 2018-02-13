@@ -5,6 +5,7 @@
  */
 package byui.cit360.collections;
 
+import byui.cit360.Handler;
 import java.util.*;
 import byui.cit360.collections.model.Employee;
 import java.io.BufferedReader;
@@ -17,7 +18,11 @@ import java.util.logging.Logger;
  *
  * @author Dale
  */
-public class ByuiCit360Collections {
+public class ByuiCit360Collections implements byui.cit360.Handler {
+    
+    public void ByuiCit360Collections() {
+        
+    }
     
     public static void settest(List<Employee> el) throws IOException {
         
@@ -183,12 +188,9 @@ public class ByuiCit360Collections {
             System.out.println("Employee: " + e.toString());
         }
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        
+    
+    @Override
+    public void execute() {
         // create array of employees
         Employee[] workers = new Employee[5];
         workers[0] = new Employee("John","Dangers",123456,new Date(112,12,26));
@@ -197,11 +199,42 @@ public class ByuiCit360Collections {
         workers[3] = new Employee("Jane","Waters",123459,new Date(114,10,16));
         workers[4] = new Employee("Nancy","Rogers",123460,new Date(113,12,3));
         
-        // use the array to create a list
-        // listtest(workers);
+        try {
+            // use the array to create a list
+            listtest(workers);
+        } catch (IOException ex) {
+            Logger.getLogger(ByuiCit360Collections.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * @param args the command line arguments
+     * @throws java.io.IOException
+     */
+    public static void main(String[] args) throws IOException {
         
-        // Let's test our URL and JSON
-        byui.cit360.url.url.getToken();
+        // Setup menu of choices
+        AppController ac = new AppController();
+        ac.fillMap();
+        String choice = "";
+        String menu = "CIT360 Menu\r\n"
+                    + "===========\r\n\n"
+                    + "list - Test Collections, Hibernate\r\n"
+                    + "url  - Test HTTPConnection, JSON\r\n"
+                    + "exit - leave the program\r\n\n"
+                    + "Choose the test to run: ";
+        
+        while(!choice.equals("exit")) {
+            BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print(menu);
+            choice = reader1.readLine();
+            Set<String> hs = ac.commands.keySet();
+            if (!hs.contains(choice)) {
+                System.out.println("Invalid Choice.");
+                choice = "";
+            }
+            ac.runCommand(choice);
+        }
     }
     
 }

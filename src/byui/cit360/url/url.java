@@ -18,11 +18,15 @@ import org.json.simple.parser.ParseException;
  *
  * @author Dale
  */
-public class url {
+public class url implements byui.cit360.Handler {
     static Integer acctNum = null;
     static String userName = null;
     static String apiKey = null;
     static String apiToken = null;
+    
+    public void url() {
+        
+    }
     
     public static void getToken() {
         // Get input from user
@@ -104,5 +108,8 @@ public class url {
         System.out.println("API Token: " + apiToken);
     }
     
-    
+    @Override
+    public void execute() {
+        getToken();
+    }
 }
