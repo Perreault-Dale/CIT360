@@ -222,6 +222,7 @@ public class ByuiCit360Collections implements byui.cit360.Handler {
                     + "list - Test Collections, Hibernate\r\n"
                     + "del  - Test Hibernate with SQL\r\n"
                     + "url  - Test HTTPConnection, JSON\r\n"
+                    + "thread - Test threading\r\n"
                     + "exit - leave the program\r\n\n"
                     + "Choose the test to run: ";
         
@@ -231,11 +232,11 @@ public class ByuiCit360Collections implements byui.cit360.Handler {
             System.out.print(menu);
             choice = reader1.readLine();
             Set<String> hs = ac.commands.keySet();
-            if (!hs.contains(choice)) {
+            if (hs.contains(choice)) {
+                ac.runCommand(choice);
+            } else {
                 System.out.println("Invalid Choice.");
-                choice = "";
             }
-            ac.runCommand(choice);
         }
     }
     

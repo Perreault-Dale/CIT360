@@ -21,6 +21,7 @@ public class AppController {
         commands.put("list", new ByuiCit360Collections());
         commands.put("del", new byui.cit360.hibernate.DeleteRecords());
         commands.put("url", new byui.cit360.url.url());
+        commands.put("thread", new byui.cit360.threading.Threads());
         commands.put("exit", new exit());
     }
     
