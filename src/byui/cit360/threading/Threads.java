@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,11 +87,61 @@ public class Threads implements Handler{
         }
     }
     
+    public void concurrentRunv2() throws InterruptedException {
+        AppController ac = new AppController();
+        
+        Runnable task1 = () -> {
+            try {
+                ac.runCommand("list");
+                System.out.println("Initial task complete.");
+            } catch (Exception e) {
+                throw new IllegalStateException("task interrupted",e);
+            }
+        };
+        
+        Runnable task2 = () -> {
+            try {
+                ac.runCommand("del");
+                System.out.println("Secondary task complete.");
+            } catch (Exception e) {
+                throw new IllegalStateException("task interrupted",e);
+            }
+        };
+        
+        ExecutorService exec = Executors.newWorkStealingPool();
+        
+        Future<?> f1 = exec.submit(task1);
+        int timer = 0;
+        while (!f1.isDone()) {
+            TimeUnit.SECONDS.sleep(1);
+            timer++;
+            System.out.println("Waited for " + timer + " seconds.");
+        }
+        Future<?> f2 = exec.submit(task2);
+        
+        try {
+            exec.shutdown();
+            exec.awaitTermination(15, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            System.err.println("Tasks interrupted");
+        } finally {
+            if (!exec.isTerminated()) {
+                System.err.println("Tasks failed to close; cancelling forcefully.");
+            }
+            exec.shutdownNow();
+        }
+    }
+    
     @Override
     public void execute() {
         simpleThread();
         try {
             concurrentRun();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Threads.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            concurrentRunv2();
         } catch (InterruptedException ex) {
             Logger.getLogger(Threads.class.getName()).log(Level.SEVERE, null, ex);
         }
